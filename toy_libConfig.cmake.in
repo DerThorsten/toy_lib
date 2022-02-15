@@ -1,0 +1,36 @@
+
+# toy_lib cmake module
+# This module sets the following variables in your project::
+#
+#   toy_lib_FOUND - true if toy_lib found on the system
+#   toy_lib_INCLUDE_DIRS - the directory containing toy_lib headers
+#   toy_lib_LIBRARY - the library for dynamic linking
+#   toy_lib_STATIC_LIBRARY - the library for static linking
+
+@PACKAGE_INIT@
+
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR};${CMAKE_MODULE_PATH}")
+
+@TOY_LIB_CONFIG_CODE@
+
+include(CMakeFindDependencyMacro)
+
+if (NOT TARGET toy_lib)# AND NOT TARGET toy_lib-static)
+    include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
+
+    # if (TARGET toy_lib AND TARGET toy_lib-static)
+    #     get_target_property(@PROJECT_NAME@_INCLUDE_DIR toy_lib INTERFACE_INCLUDE_DIRECTORIES)
+    #     get_target_property(@PROJECT_NAME@_LIBRARY toy_lib LOCATION)
+    #     get_target_property(@PROJECT_NAME@_STATIC_LIBRARY toy_lib-static LOCATION)
+    if (TARGET toy_lib)
+
+        get_target_property(@PROJECT_NAME@_INCLUDE_DIR toy_lib INTERFACE_INCLUDE_DIRECTORIES)
+        get_target_property(@PROJECT_NAME@_LIBRARY toy_lib LOCATION)
+
+
+    # elseif (TARGET toy_lib-static)
+    #     get_target_property(@PROJECT_NAME@_INCLUDE_DIR toy_lib-static INTERFACE_INCLUDE_DIRECTORIES)
+    #     get_target_property(@PROJECT_NAME@_STATIC_LIBRARY toy_lib-static LOCATION)
+    #     set(@PROJECT_NAME@_LIBRARY ${@PROJECT_NAME@_STATIC_LIBRARY})
+    endif ()
+endif ()
